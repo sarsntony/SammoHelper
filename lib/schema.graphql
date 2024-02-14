@@ -1,0 +1,57 @@
+﻿schema {
+  query: Query
+  mutation: Mutation
+}
+
+type General {
+  content: String
+  country: String
+  createdAt: AWSDateTime!
+  lastActions: AWSJSON
+  name: String!
+  server: String!
+  time: String
+  unitClass: String
+  unitType: String
+  updatedAt: AWSDateTime!
+}
+
+type Mutation {
+  createGeneral(input: CreateGeneralInput!): General
+  deleteGeneral(input: DeleteGeneralInput!): General
+  updateGeneral(input: UpdateGeneralInput!): General
+  updateGeneralFromUser(action: String, country: String, name: String!, server: String!, time: String, unitType: String, yearMonth: String): General
+}
+
+type Query {
+  getGeneral(name: String!, server: String!): General
+  listGenerals(server: String!): [General]
+}
+
+input CreateGeneralInput {
+  content: String
+  country: String
+  lastActions: AWSJSON
+  name: String!
+  server: String!
+  time: String
+  unitClass: String
+  unitType: String
+}
+
+input DeleteGeneralInput {
+  name: String!
+  server: String!
+}
+
+input UpdateGeneralInput {
+  action: String
+  content: String
+  country: String
+  lastActions: AWSJSON
+  name: String!
+  server: String!
+  time: String
+  unitClass: String
+  unitType: String
+}
