@@ -1,20 +1,29 @@
-const AWS = require('aws-sdk');
-const docClient = new AWS.DynamoDB.DocumentClient();
+import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
+import { unmarshall } from "@aws-sdk/util-dynamodb";
 
 export type ListGeneralsArguments = {
     server: string;
 }
 
 export async function listGenerals(listGeneralsArguments: ListGeneralsArguments) {
-    console.log(`listGeneralsArguments: ${listGeneralsArguments}`);
-    const params = {
-      TableName: process.env.GENERAL_TABLE,
-      Key: listGeneralsArguments.server
+  console.log(`listGeneralsArguments: ${listGeneralsArguments}`);
+  const client: DynamoDBClient = new DynamoDBClient({region: 'us-east-1'});
+  const queryGeneralCommand = new QueryCommand({
+    TableName: process.env.GENERAL_TABLE,
+    ExpressionAttributeValues: {
+      ":server": {
+        "S": listGeneralsArguments.server
+      }
+    },
+    KeyConditionExpression: "server = :server",
+  });
+  try {
+    const data = await client.send(queryGeneralCommand);
+    if (data.Items) {
+      return data.Items.map((item) => unmarshall(item));
     }
-    try {
-      const data = await docClient.get(params).promise()
-      return data;
-    } catch (err) {
-      return err;
-    }
+    return [];
+  } catch (err) {
+    return err;
   }
+}

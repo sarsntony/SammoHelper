@@ -8,7 +8,8 @@
     "build": "tsc",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk"
+    "cdk": "cdk",
+    "codegen": "graphql-codegen --config graphql.config.yml"
   },
   "devDependencies": {
     "@types/jest": "^29.5.1",
@@ -22,6 +23,8 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.518.0",
     "@aws-sdk/util-dynamodb": "^3.518.0",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.6",
     "aws-cdk-lib": "^2.128.0",
     "aws-sdk": "^2.1559.0",
     "constructs": "^10.0.0",

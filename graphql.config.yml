@@ -1,0 +1,13 @@
+schema: 
+  - ./lib/schema.graphql
+  - ./lib/appsync.graphql
+extensions:
+  codegen:
+    generates:
+      ./lambda/types.ts:
+        plugins:
+          - typescript
+        config:
+          avoidOptionals: true
+          namingConvention: 'keep'
+          skipTypename: true

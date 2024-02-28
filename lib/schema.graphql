@@ -4,6 +4,7 @@
 }
 
 type General {
+  action: String
   content: String
   country: String
   createdAt: AWSDateTime!
@@ -29,6 +30,7 @@ type Query {
 }
 
 input CreateGeneralInput {
+  action: String
   content: String
   country: String
   lastActions: AWSJSON
