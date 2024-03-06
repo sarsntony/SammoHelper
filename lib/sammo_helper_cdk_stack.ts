@@ -7,8 +7,8 @@ import { Construct } from 'constructs';
 import path = require('path');
 
 export class SammoHelperCdkStack extends Stack {
-  constructor(scope: Construct, id: string) {
-    super(scope, id);
+  constructor(scope: Construct, id: string, props: StackProps) {
+    super(scope, id, props);
 
     const generalApi = new GraphqlApi(this, 'GeneralAPI', {
       name: 'General',

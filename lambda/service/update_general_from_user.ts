@@ -4,7 +4,7 @@ import { CreateGeneralInput, General, UpdateGeneralInput } from "../types";
 
 const cleanUpObject = (object: Record<string, any>) => {
   for (let key in object) {
-    if (object[key] === undefined) {
+    if (object[key] === undefined || object[key] === 'undefined') {
       delete object[key];
     }
   }

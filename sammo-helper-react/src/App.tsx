@@ -1,40 +1,29 @@
-import { Amplify } from 'aws-amplify'
-import { generateClient } from 'aws-amplify/api';
-import { listGenerals } from './graphql/queries';
-import React, { useEffect, useState } from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import GeneralTable from './components/GeneralTable';
+
+function Home() {
+  return (
+    <div style={{ padding: 20 }}>
+      <h2>삼모 헬퍼 v0.1</h2>
+      <p>턴 수집기만 작동중입니다</p>
+      <Link to='/turns'>턴수집기</Link>
+    </div>
+  );
+}
 
 function App() {
   // https://docs.amplify.aws/javascript/build-a-backend/graphqlapi/set-up-graphql-api/
   // npx @aws-amplify/cli codegen
-  Amplify.configure({
-    API: {
-      GraphQL: {
-        endpoint: 'https://occnmndw4fffxigyer4rpcunrm.appsync-api.us-east-1.amazonaws.com/graphql',
-        region: 'us-east-1',
-        defaultAuthMode: 'apiKey',
-        apiKey: 'da2-f25kzp2vdnevde4ily3luu3o64'
-      }
-    }
-  });
-
-  const client = generateClient();
-  const [data, updateData] = useState("initialData");
-  useEffect(() => {
-    const getData = async () => {
-      const result = await client.graphql({
-        query: listGenerals,
-        variables: {
-          server: '체66기'
-        }
-      });
-      updateData(JSON.stringify(result.data));
-    }
-    getData();
-  }, []);
-  console.log(data);
   return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/turns" element={<GeneralTable />} />
+      </Routes>
+    </Router>
+  );
+/*
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
@@ -52,6 +41,7 @@ function App() {
       </header>
     </div>
   );
+  */
 }
 
 export default App;
